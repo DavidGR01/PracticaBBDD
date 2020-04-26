@@ -1,11 +1,11 @@
 package model;
 
-public class Tipo_combustible {
+public class TipoCombustible {
 
 	private int idTipoCombustible = -1;
 	private String nombre, descripcion;
 
-	public Tipo_combustible(int idTipoCombustible, String nombre, String descripcion) {
+	public TipoCombustible(int idTipoCombustible, String nombre, String descripcion) {
 		this.idTipoCombustible = idTipoCombustible;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
