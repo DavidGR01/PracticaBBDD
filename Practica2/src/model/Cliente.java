@@ -1,42 +1,35 @@
 package model;
 
 public class Cliente {
-	int id_cliente, dni_cliente, id_poblacion;
-	String nombre, apellido1, apellido2, telefono_contacto;
+	private int idCliente = -1, dniCliente;
+	private String nombre, apellido1, apellido2, telefonoContacto;
+	private int idPoblacion;
 
-	public Cliente(int id_cliente, int dni_cliente, int id_poblacion, String nombre, String apellido1,
-			String apellido2, String telefono_contacto) {
-		this.id_cliente = id_cliente;
-		this.dni_cliente = dni_cliente;
-		this.id_poblacion = id_poblacion;
+	public Cliente(int idCliente, int dniCliente, String nombre, String apellido1, String apellido2,
+			String telefonoContacto, int idPoblacion) {
+		this.idCliente = idCliente;
+		this.dniCliente = dniCliente;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
-		this.telefono_contacto = telefono_contacto;
+		this.telefonoContacto = telefonoContacto;
+		this.idPoblacion = idPoblacion;
 	}
 
-	public int getId_cliente() {
-		return id_cliente;
+	public int getIdCliente() {
+		return idCliente;
 	}
 
-	public void setId_cliente(int id_cliente) {
-		this.id_cliente = id_cliente;
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
 	}
 
-	public int getDni_cliente() {
-		return dni_cliente;
+	public int getDniCliente() {
+		return dniCliente;
 	}
 
-	public void setDni_cliente(int dni_cliente) {
-		this.dni_cliente = dni_cliente;
-	}
-
-	public int getId_poblacion() {
-		return id_poblacion;
-	}
-
-	public void setId_poblacion(int id_poblacion) {
-		this.id_poblacion = id_poblacion;
+	public void setDniCliente(int dniCliente) {
+		this.dniCliente = dniCliente;
 	}
 
 	public String getNombre() {
@@ -63,19 +56,27 @@ public class Cliente {
 		this.apellido2 = apellido2;
 	}
 
-	public String getTelefono_contacto() {
-		return telefono_contacto;
+	public String getTelefonoContacto() {
+		return telefonoContacto;
 	}
 
-	public void setTelefono_contacto(String telefono_contacto) {
-		this.telefono_contacto = telefono_contacto;
+	public void setTelefonoContacto(String telefonoContacto) {
+		this.telefonoContacto = telefonoContacto;
+	}
+
+	public int getIdPoblacion() {
+		return idPoblacion;
+	}
+
+	public void setIdPoblacion(int idPoblacion) {
+		this.idPoblacion = idPoblacion;
 	}
 
 	@Override
 	public String toString() {
-		return "DBCliente [id_cliente=" + id_cliente + ", dni_cliente=" + dni_cliente + ", id_poblacion=" + id_poblacion
-				+ ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2
-				+ ", telefono_contacto=" + telefono_contacto + "]";
+		return "Cliente [idCliente=" + idCliente + ", dniCliente=" + dniCliente + ", nombre=" + nombre + ", apellido1="
+				+ apellido1 + ", apellido2=" + apellido2 + ", telefonoContacto=" + telefonoContacto + ", idPoblacion="
+				+ idPoblacion + "]";
 	}
 
 }

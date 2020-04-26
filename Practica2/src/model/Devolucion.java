@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Recogida {
+public class Devolucion {
 
 	private int idReserva = -1;
 	private LocalDate fechaPrevista;
@@ -12,7 +12,7 @@ public class Recogida {
 	private LocalTime horaEfectiva;
 	private int idOficina, idEstadoTransaccion;
 
-	public Recogida(int idReserva, LocalDate fechaPrevista, LocalTime horaPrevista, LocalDate fechaEfectiva,
+	public Devolucion(int idReserva, LocalDate fechaPrevista, LocalTime horaPrevista, LocalDate fechaEfectiva,
 			LocalTime horaEfectiva, int idOficina, int idEstadoTransaccion) {
 		this.idReserva = idReserva;
 		this.fechaPrevista = fechaPrevista;
@@ -81,7 +81,7 @@ public class Recogida {
 
 	@Override
 	public String toString() {
-		return "Recogida [idReserva=" + idReserva + ", fechaPrevista=" + fechaPrevista + ", horaPrevista="
+		return "Devolucion [idReserva=" + idReserva + ", fechaPrevista=" + fechaPrevista + ", horaPrevista="
 				+ horaPrevista + ", fechaEfectiva=" + fechaEfectiva + ", horaEfectiva=" + horaEfectiva + ", idOficina="
 				+ idOficina + ", idEstadoTransaccion=" + idEstadoTransaccion + "]";
 	}

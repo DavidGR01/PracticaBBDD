@@ -1,39 +1,23 @@
 package model;
 
 public class Categoria {
-	private int id_categoria = -1;
-	private float ratio_mantenimiento, precio_diario;
+	private int idCategoria = -1;
 	private String nombre;
+	private float precioDiario, ratioMantenimiento;
 
-	public Categoria(int id_categoria, float ratio_mantenimiento, float precio_diario, String nombre) {
-		this.id_categoria = id_categoria;
-		this.ratio_mantenimiento = ratio_mantenimiento;
-		this.precio_diario = precio_diario;
+	public Categoria(int idCategoria, String nombre, float precioDiario, float ratioMantenimiento) {
+		this.idCategoria = idCategoria;
 		this.nombre = nombre;
+		this.precioDiario = precioDiario;
+		this.ratioMantenimiento = ratioMantenimiento;
 	}
 
-	public int getId_categoria() {
-		return id_categoria;
+	public int getIdCategoria() {
+		return idCategoria;
 	}
 
-	public void setId_categoria(int id_categoria) {
-		this.id_categoria = id_categoria;
-	}
-
-	public float getRatio_mantenimiento() {
-		return ratio_mantenimiento;
-	}
-
-	public void setRatio_mantenimiento(float ratio_mantenimiento) {
-		this.ratio_mantenimiento = ratio_mantenimiento;
-	}
-
-	public float getPrecio_diario() {
-		return precio_diario;
-	}
-
-	public void setPrecio_diario(float precio_diario) {
-		this.precio_diario = precio_diario;
+	public void setIdCategoria(int idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 
 	public String getNombre() {
@@ -44,9 +28,26 @@ public class Categoria {
 		this.nombre = nombre;
 	}
 
+	public float getPrecioDiario() {
+		return precioDiario;
+	}
+
+	public void setPrecioDiario(float precioDiario) {
+		this.precioDiario = precioDiario;
+	}
+
+	public float getRatioMantenimiento() {
+		return ratioMantenimiento;
+	}
+
+	public void setRatioMantenimiento(float ratioMantenimiento) {
+		this.ratioMantenimiento = ratioMantenimiento;
+	}
+
 	@Override
 	public String toString() {
-		return "DBCategoria [id_categoria=" + id_categoria + ", ratio_mantenimiento=" + ratio_mantenimiento
-				+ ", precio_diario=" + precio_diario + ", nombre=" + nombre + "]";
+		return "Categoria [idCategoria=" + idCategoria + ", nombre=" + nombre + ", precioDiario=" + precioDiario
+				+ ", ratioMantenimiento=" + ratioMantenimiento + "]";
 	}
+
 }
