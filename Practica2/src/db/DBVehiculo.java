@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Insert;
+
 
 import model.Categoria;
 import model.TipoCombustible;
@@ -57,14 +57,18 @@ public class DBVehiculo {
 				ResultSet rsMatricula = pstMatricula.executeQuery();
 				if (rsMatricula.next() && FKCorrectas) {
 					// Update
-					PreparedStatement pstUpdate = conn.prepareStatement(
-							"UPDATE vehiculo SET matricula = ? , ano_matriculacion = ?, id_color = ? , "
-							+ "num_plazas = ? , km = ?, id_modelo = ?, id_categoria = ?, id_tipo_combustible = ? ;");
-					pstUpdate.setString(1, cols[0]);
-					pstUpdate.setString(1, cols[0]);
-					pstUpdate.setString(1, cols[0]);
-					pstUpdate.setString(1, cols[0]);
-					pstUpdate.setString(1, cols[0]);
+					String ano_matriculacion =  cols[1];
+					int num_plazas =  Integer.parseInt(cols[3]);
+					int km =  Integer.parseInt(cols[4]);
+					Statement st = conn.createStatement();
+							
+					st.addBatch("UPDATE vehiculo SET ano_matriculacion = " +ano_matriculacion+ ", id_color = "+id_color+" , "
+							+ "num_plazas = "+num_plazas+" , km = "+ km +" , id_modelo = "+ id_modelo+ ", id_categoria = "+ id_categoria +
+							", id_tipo_combustible = "+ id_tipo_combustible +
+							 "WHERE matricula = "+ cols[0]+ ";");
+					
+					st.executeBatch();
+					
 				} else {
 
 				}
