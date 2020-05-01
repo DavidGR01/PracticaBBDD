@@ -3,6 +3,7 @@ package db;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,56 +27,87 @@ public class DBVehiculo {
 	}
 
 	public static void importarCSV(String pathFichero) {
+
+		// Inciamos el temporizador
 		long inicio = System.currentTimeMillis();
+
 		Connection conn = ConnectionManager.getConnection();
+
+		// Cargamos los hashmaps
 		cargarHashMaps(conn);
-		Statement st = null;
-		ResultSet rs = null;
+
 		// Abrir el archivo
 		try {
+
+			// PreparedStatements y ResultSet de matricula
+			PreparedStatement pstUpdate = conn.prepareStatement(
+					"UPDATE vehiculo SET ano_matriculacion = ?, id_color = ?, num_plazas = ?, km = ?, id_modelo = ?, id_categoria = ?, id_tipo_combustible = ? WHERE matricula = ? ;");
+			PreparedStatement pstInsert = conn
+					.prepareStatement("INSERT INTO vehiculo VALUES (default,?,?,?,?,?,?,?,?)");
+			PreparedStatement pstMatricula = conn.prepareStatement("SELECT * FROM vehiculo WHERE matricula = ? ;");
+			ResultSet rs = null;
+
 			Scanner sc = new Scanner(new File(pathFichero), "UTF-8");
 			sc.nextLine();
 
+			// Guardamos el estado previo del commit
 			boolean prevState = conn.getAutoCommit();
-//			int cont = 0;
+
 			while (sc.hasNext()) {
 				String lineaDatos = sc.nextLine();
 				String[] cols = lineaDatos.split(";(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
+
+				// Quitamos las comillas sobrantes
+				for (int i = 0; i < cols.length; i++)
+					cols[i] = cols[i].replace("\"", "");
 
 				// Iniciamos la transacción
 				conn.setAutoCommit(false);
 
 				// Coger valores de los HashMaps y del csv
-				Integer id_color = colores.get(cols[2].replace("\"", ""));
-				Integer id_modelo = modelos.get(cols[6].replace("\"", ""));
-				Integer id_categoria = categorias.get(cols[7].replace("\"", ""));
-				Integer id_tipo_combustible = tiposCombustible.get(cols[8].replace("\"", ""));
-				int ano_matriculacion = Integer.parseInt(cols[1].replace("\"", ""));
-				int num_plazas = Integer.parseInt(cols[3].replace("\"", ""));
-				double km = Double.parseDouble(cols[4].replace("\"", ""));
+				Integer idColor = colores.get(cols[2]);
+				Integer idModelo = modelos.get(cols[6]);
+				Integer idCategoria = categorias.get(cols[7]);
+				Integer idTipoCombustible = tiposCombustible.get(cols[8]);
+				int anoMatriculacion = Integer.parseInt(cols[1]);
+				int numPlazas = Integer.parseInt(cols[3]);
+				double km = Double.parseDouble(cols[4]);
 
 				// Condicion para que las FKs sean correctas
-				boolean FKCorrectas = id_color != null && id_modelo != null && id_categoria != null
-						&& id_tipo_combustible != null;
+				boolean FKCorrectas = idColor != null && idModelo != null && idCategoria != null
+						&& idTipoCombustible != null;
 
 				// Comprobar la matricula
-				st = conn.createStatement();
-				rs = st.executeQuery("SELECT * FROM vehiculo WHERE matricula = " + cols[0] + " ;");
+				pstMatricula.setString(1, cols[0]);
+
+				rs = pstMatricula.executeQuery();
 
 				if (rs.next() && FKCorrectas) {
 					// Update
-					st.addBatch("UPDATE vehiculo SET ano_matriculacion = " + ano_matriculacion + ", id_color = "
-							+ id_color + " , " + "num_plazas = " + num_plazas + " , km = " + km + " , id_modelo = "
-							+ id_modelo + ", id_categoria = " + id_categoria + ", id_tipo_combustible = "
-							+ id_tipo_combustible + " WHERE matricula = " + cols[0] + ";");
-					st.executeBatch();
+					pstUpdate.setInt(1, anoMatriculacion);
+					pstUpdate.setInt(2, idColor);
+					pstUpdate.setInt(3, numPlazas);
+					pstUpdate.setDouble(4, km);
+					pstUpdate.setInt(5, idModelo);
+					pstUpdate.setInt(6, idCategoria);
+					pstUpdate.setInt(7, idTipoCombustible);
+					pstUpdate.setString(8, cols[0]);
+
+					pstUpdate.addBatch();
+					pstUpdate.executeBatch();
 				} else if (FKCorrectas) {
 					// Insert
-					st.addBatch(
-							"INSERT INTO vehiculo (matricula, ano_matriculacion, id_color, num_plazas, km, id_modelo, id_categoria, id_tipo_combustible) VALUES ("
-									+ cols[0] + ", " + ano_matriculacion + ", " + id_color + ", " + num_plazas + ", "
-									+ km + ", " + id_modelo + ", " + id_categoria + ", " + id_tipo_combustible + ");");
-					st.executeBatch();
+					pstInsert.setString(1, cols[0]);
+					pstInsert.setInt(2, anoMatriculacion);
+					pstInsert.setInt(3, idColor);
+					pstInsert.setInt(4, numPlazas);
+					pstInsert.setDouble(5, km);
+					pstInsert.setInt(6, idModelo);
+					pstInsert.setInt(7, idCategoria);
+					pstInsert.setInt(8, idTipoCombustible);
+
+					pstInsert.addBatch();
+					pstInsert.executeBatch();
 				}
 
 				// Hacemos commit
@@ -83,7 +115,9 @@ public class DBVehiculo {
 			}
 			// Cerramos los recursos
 			rs.close();
-			st.close();
+			pstUpdate.close();
+			pstInsert.close();
+			pstMatricula.close();
 			sc.close();
 
 			// Devolvemos el estado del commit a su estado anterior
