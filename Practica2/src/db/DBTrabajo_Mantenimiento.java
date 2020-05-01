@@ -81,7 +81,6 @@ public class DBTrabajo_Mantenimiento {
 				// Si el lote está lleno ejecutamos el batch
 				if (contador == tamanoLote) {
 					contadorLotes++;
-					System.out.println("Ejecutando batch " + contadorLotes);
 					pst.executeBatch();
 					conn.commit();
 					contador = 0;
