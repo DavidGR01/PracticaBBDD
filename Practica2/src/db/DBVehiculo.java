@@ -53,6 +53,9 @@ public class DBVehiculo {
 			// Guardamos el estado previo del commit
 			boolean prevState = conn.getAutoCommit();
 
+			// Desactivamos FOREIGN_KEY_CHECKS ya que ya lo comprobamos a mano
+			conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 0; ").executeQuery();
+
 			while (sc.hasNext()) {
 				String lineaDatos = sc.nextLine();
 				String[] cols = lineaDatos.split(";(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
@@ -122,6 +125,9 @@ public class DBVehiculo {
 
 			// Devolvemos el estado del commit a su estado anterior
 			conn.setAutoCommit(prevState);
+
+			// Reactivamos FOREIGN_KEY_CHECKS
+			conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 1; ").executeQuery();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
