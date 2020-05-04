@@ -23,6 +23,8 @@ public class DBVehiculo {
 	private static HashMap<String, Integer> categorias = new HashMap<>();
 
 	public List<Vehiculo> getVehiculos(TipoCombustible combustible, Categoria categoria) {
+		
+		//akjbf
 		return null;
 	}
 
