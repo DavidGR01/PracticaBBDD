@@ -7,11 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 import model.Categoria;
+import model.Color;
 import model.TipoCombustible;
 import model.Vehiculo;
 
@@ -22,10 +24,52 @@ public class DBVehiculo {
 	private static HashMap<String, Integer> modelos = new HashMap<>();
 	private static HashMap<String, Integer> categorias = new HashMap<>();
 
-	public List<Vehiculo> getVehiculos(TipoCombustible combustible, Categoria categoria) {
+	public static List<Vehiculo> getVehiculos(TipoCombustible combustible, Categoria categoria) {
 
-		// akjbf
-		return null;
+		// Lista resultado
+		List<Vehiculo> res = new ArrayList<Vehiculo>();
+
+		try {
+
+			PreparedStatement pst = ConnectionManager.getConnection().prepareStatement("SELECT * FROM vehiculo "
+					+ "WHERE id_tipo_combustible = ? AND id_categoria = ? ORDER BY km, ano_matriculacion desc LIMIT 20 ;");
+
+			// Añadimos a la sentencia los parametros pasados
+			pst.setInt(1, combustible.getIdTipoCombustible());
+			pst.setInt(2, categoria.getIdCategoria());
+
+			ResultSet rs = pst.executeQuery();
+
+			while (rs.next()) {
+
+				// Cogemos los atributos del ResultSet
+				int idVehiculo = rs.getInt(1);
+				String matricula = rs.getString(2);
+				int anoMatriculacion = rs.getInt(3);
+				int idColor = rs.getInt(4);
+				int numPlazas = rs.getInt(5);
+				double km = rs.getInt(6);
+				int idModelo = rs.getInt(7);
+				int idCategoria = rs.getInt(8);
+				int idTipoCombustible = rs.getInt(9);
+
+				// Lo añadimos a la lista
+				res.add(new Vehiculo(idVehiculo, matricula, anoMatriculacion, idColor, numPlazas, km, idModelo,
+						idCategoria, idTipoCombustible));
+			}
+
+			// Cerramos los recursos
+			pst.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// Si o si cerramos la conexión
+			ConnectionManager.closeConnection();
+		}
+
+		return res;
+
 	}
 
 	public static void importarCSV(String pathFichero) {

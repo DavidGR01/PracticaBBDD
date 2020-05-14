@@ -22,7 +22,7 @@ public class Devolucion {
 		this.idOficina = idOficina;
 		this.idEstadoTransaccion = idEstadoTransaccion;
 	}
-
+	
 	public int getIdReserva() {
 		return idReserva;
 	}

@@ -16,6 +16,17 @@ public class Cliente {
 		this.idPoblacion = idPoblacion;
 	}
 
+	// Constructor para crear clientes antes de insertarlos
+	public Cliente(int dniCliente, String nombre, String apellido1, String apellido2, String telefonoContacto,
+			int idPoblacion) {
+		this.dniCliente = dniCliente;
+		this.nombre = nombre;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
+		this.telefonoContacto = telefonoContacto;
+		this.idPoblacion = idPoblacion;
+	}
+
 	public int getIdCliente() {
 		return idCliente;
 	}

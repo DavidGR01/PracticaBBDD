@@ -23,6 +23,17 @@ public class Recogida {
 		this.idEstadoTransaccion = idEstadoTransaccion;
 	}
 
+	// Constructor sin id
+	public Recogida(LocalDate fechaPrevista, LocalTime horaPrevista, LocalDate fechaEfectiva, LocalTime horaEfectiva,
+			int idOficina, int idEstadoTransaccion) {
+		this.fechaPrevista = fechaPrevista;
+		this.horaPrevista = horaPrevista;
+		this.fechaEfectiva = fechaEfectiva;
+		this.horaEfectiva = horaEfectiva;
+		this.idOficina = idOficina;
+		this.idEstadoTransaccion = idEstadoTransaccion;
+	}
+
 	public int getIdReserva() {
 		return idReserva;
 	}

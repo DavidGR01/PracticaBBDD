@@ -4,14 +4,14 @@ public class Vehiculo {
 
 	private int idVehiculo = -1;
 	private String matricula;
-	private int anoCatriculacion, idColor, numPlazas;
-	private float km;
+	private int anoMatriculacion, idColor, numPlazas;
+	private double km;
 	private int idModelo, idCategoria, idTipoCombustible;
 
-	public Vehiculo(int idVehiculo, String matricula, int anoCatriculacion, int idColor, int numPlazas, float km,
+	public Vehiculo(int idVehiculo, String matricula, int anoMatriculacion, int idColor, int numPlazas, double km,
 			int idModelo, int idCategoria, int idTipoCombustible) {
 		this.idVehiculo = idVehiculo;
-		this.anoCatriculacion = anoCatriculacion;
+		this.anoMatriculacion = anoMatriculacion;
 		this.idColor = idColor;
 		this.numPlazas = numPlazas;
 		this.idModelo = idModelo;
@@ -37,12 +37,12 @@ public class Vehiculo {
 		this.idVehiculo = idVehiculo;
 	}
 
-	public int getAnoCatriculacion() {
-		return anoCatriculacion;
+	public int getanoMatriculacion() {
+		return anoMatriculacion;
 	}
 
-	public void setAnoCatriculacion(int anoCatriculacion) {
-		this.anoCatriculacion = anoCatriculacion;
+	public void setanoMatriculacion(int anoMatriculacion) {
+		this.anoMatriculacion = anoMatriculacion;
 	}
 
 	public int getIdColor() {
@@ -85,18 +85,18 @@ public class Vehiculo {
 		this.idTipoCombustible = idTipoCombustible;
 	}
 
-	public float getKm() {
+	public double getKm() {
 		return km;
 	}
 
-	public void setKm(float km) {
+	public void setKm(double km) {
 		this.km = km;
 	}
 
 	@Override
 	public String toString() {
-		return "Vehiculo [idVehiculo=" + idVehiculo + ", matricula=" + matricula + ", anoCatriculacion="
-				+ anoCatriculacion + ", idColor=" + idColor + ", numPlazas=" + numPlazas + ", km=" + km + ", idModelo="
+		return "Vehiculo [idVehiculo=" + idVehiculo + ", matricula=" + matricula + ", anoMatriculacion="
+				+ anoMatriculacion + ", idColor=" + idColor + ", numPlazas=" + numPlazas + ", km=" + km + ", idModelo="
 				+ idModelo + ", idCategoria=" + idCategoria + ", idTipoCombustible=" + idTipoCombustible + "]";
 	}
 

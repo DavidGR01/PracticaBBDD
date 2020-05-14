@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.TimeZone;
 
 public class ConnectionManager {
 
@@ -40,7 +41,7 @@ public class ConnectionManager {
 
 					conn = DriverManager.getConnection("jdbc:mysql://" + servidor + ": " + puerto + "/" + baseDatos
 							+ "?" + "user= " + usuario + "&password=" + password
-							+ "&useJDBCCompliantTimezoneShift=true&serverTimezone=UTC");
+							+ "&useJDBCCompliantTimezoneShift=true&serverTimezone=" + TimeZone.getDefault().getID());
 
 				} catch (ExceptionInInitializerError e) {
 					System.err.println(e.getMessage());

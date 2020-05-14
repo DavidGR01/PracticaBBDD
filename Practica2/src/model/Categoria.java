@@ -3,9 +3,9 @@ package model;
 public class Categoria {
 	private int idCategoria = -1;
 	private String nombre;
-	private float precioDiario, ratioMantenimiento;
+	private double precioDiario, ratioMantenimiento;
 
-	public Categoria(int idCategoria, String nombre, float precioDiario, float ratioMantenimiento) {
+	public Categoria(int idCategoria, String nombre, double precioDiario, double ratioMantenimiento) {
 		this.idCategoria = idCategoria;
 		this.nombre = nombre;
 		this.precioDiario = precioDiario;
@@ -28,7 +28,7 @@ public class Categoria {
 		this.nombre = nombre;
 	}
 
-	public float getPrecioDiario() {
+	public double getPrecioDiario() {
 		return precioDiario;
 	}
 
@@ -36,7 +36,7 @@ public class Categoria {
 		this.precioDiario = precioDiario;
 	}
 
-	public float getRatioMantenimiento() {
+	public double getRatioMantenimiento() {
 		return ratioMantenimiento;
 	}
 
