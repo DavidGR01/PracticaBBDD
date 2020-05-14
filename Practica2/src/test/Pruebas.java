@@ -13,7 +13,7 @@ public class Pruebas {
 		DBVehiculo.importarCSV("vehiculos.csv");
 //		
 
-		DBTrabajo_Mantenimiento.importarCSV("trabajo_mantenimiento.csv", 50000);
+//		DBTrabajo_Mantenimiento.importarCSV("trabajo_mantenimiento.csv", 50000);
 
 	}
 

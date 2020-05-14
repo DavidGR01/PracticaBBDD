@@ -23,8 +23,8 @@ public class DBVehiculo {
 	private static HashMap<String, Integer> categorias = new HashMap<>();
 
 	public List<Vehiculo> getVehiculos(TipoCombustible combustible, Categoria categoria) {
-		
-		//akjbf
+
+		// akjbf
 		return null;
 	}
 
@@ -57,6 +57,8 @@ public class DBVehiculo {
 
 			// Desactivamos FOREIGN_KEY_CHECKS ya que ya lo comprobamos a mano
 			conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 0; ").executeQuery();
+
+			int counter = 0;
 
 			while (sc.hasNext()) {
 				String lineaDatos = sc.nextLine();
@@ -114,6 +116,8 @@ public class DBVehiculo {
 					pstInsert.addBatch();
 					pstInsert.executeBatch();
 				}
+
+				System.out.println(counter++);
 
 				// Hacemos commit
 				conn.commit();
