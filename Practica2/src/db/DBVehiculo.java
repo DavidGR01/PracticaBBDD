@@ -237,4 +237,24 @@ public class DBVehiculo {
 		
 		
 	}
+	public static Vehiculo getVehiculoById(int id) {
+		
+		Vehiculo res = null;
+		
+		try {
+			PreparedStatement pst = ConnectionManager.getConnection().prepareStatement("SELECT * FROM vehiculo WHERE ID_VEHICULO = ? ;");
+			pst.setInt(1,id);
+			ResultSet rs = pst.executeQuery();
+			if(rs.next())
+				res = new Vehiculo(id,rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getInt(5),rs.getDouble(6),rs.getInt(7),rs.getInt(8),rs.getInt(9));
+		rs.close();
+		pst.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			ConnectionManager.closeConnection();
+		}
+		return res;
+	}
 }
