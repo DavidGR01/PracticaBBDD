@@ -33,6 +33,7 @@ import db.DBRecogida;
 import db.DBReserva;
 import db.DBTipoCombustible;
 import db.DBVehiculo;
+import db.Estadisticas;
 import model.Categoria;
 import model.Cliente;
 import model.Color;
@@ -53,12 +54,13 @@ public class MainScreen extends JFrame {
 	private JTextField apellido2NuevoCliente;
 	private JTextField telefonoNuevoCliente;
 	private JTextField idPoblacionNuevoCliente;
-	private JComboBox cbCategoria, cbTtipoComb;
+	private JComboBox cbCategoria, cbTtipoComb, cbEstadisticas;
 	private List<Categoria> categorias;
 	private List<TipoCombustible> combustibles;
 	private JTextField txtDNIReserva;
 	private JTextField txtIdVehiculo;
 	private String separador = "------------------------------------------";
+	private JTextField txtIdEstaditica;
 
 	/**
 	 * Launch the application.
@@ -104,23 +106,19 @@ public class MainScreen extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
-		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 17));
-
 		JPanel panelTareasVarias = new JPanel();
-		tabbedPane.addTab("Tareas varias", null, panelTareasVarias, null);
+		contentPane.add(panelTareasVarias, BorderLayout.CENTER);
 		panelTareasVarias.setLayout(null);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(265, 43, 2, 623);
+		separator_1.setBounds(265, 43, 2, 523);
 		panelTareasVarias.add(separator_1);
 
 		JLabel lblListados = new JLabel("LISTADOS");
 		lblListados.setHorizontalAlignment(SwingConstants.LEFT);
 		lblListados.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblListados.setBounds(293, 233, 105, 30);
+		lblListados.setBounds(293, 190, 105, 30);
 		panelTareasVarias.add(lblListados);
 
 		JLabel lblObtenernrVehculo = new JLabel("OBTENER VEHÍCULO");
@@ -138,7 +136,7 @@ public class MainScreen extends JFrame {
 		JLabel lblNuevaReserva = new JLabel("NUEVA RESERVA");
 		lblNuevaReserva.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNuevaReserva.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblNuevaReserva.setBounds(293, 568, 209, 42);
+		lblNuevaReserva.setBounds(293, 440, 209, 42);
 		panelTareasVarias.add(lblNuevaReserva);
 
 		JButton btnColores = new JButton("Colores");
@@ -150,7 +148,7 @@ public class MainScreen extends JFrame {
 
 			}
 		});
-		btnColores.setBounds(303, 280, 75, 25);
+		btnColores.setBounds(303, 237, 75, 25);
 		panelTareasVarias.add(btnColores);
 
 		JButton btnCombustibles = new JButton("<html>Tipos de<br>Combustible</html>");
@@ -162,7 +160,7 @@ public class MainScreen extends JFrame {
 
 			}
 		});
-		btnCombustibles.setBounds(495, 272, 97, 33);
+		btnCombustibles.setBounds(495, 229, 97, 33);
 		panelTareasVarias.add(btnCombustibles);
 
 		JButton btnCategorias = new JButton("Categorias");
@@ -174,18 +172,18 @@ public class MainScreen extends JFrame {
 
 			}
 		});
-		btnCategorias.setBounds(390, 280, 93, 25);
+		btnCategorias.setBounds(390, 237, 93, 25);
 		panelTareasVarias.add(btnCategorias);
 
 		JLabel lblObtenercliente = new JLabel("OBTENER CLIENTE");
 		lblObtenercliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblObtenercliente.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblObtenercliente.setBounds(286, 401, 223, 51);
+		lblObtenercliente.setBounds(293, 308, 223, 51);
 		panelTareasVarias.add(lblObtenercliente);
 
 		txtDNI = new JTextField();
 		txtDNI.setColumns(10);
-		txtDNI.setBounds(296, 476, 116, 22);
+		txtDNI.setBounds(303, 383, 116, 22);
 		panelTareasVarias.add(txtDNI);
 
 		dniNuevoCliente = new JTextField();
@@ -226,11 +224,11 @@ public class MainScreen extends JFrame {
 		panelTareasVarias.add(button_3);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(611, 13, 737, 681);
+		scrollPane.setBounds(611, 13, 742, 716);
 		panelTareasVarias.add(scrollPane);
 
 		textArea = new JTextArea();
-		textArea.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 13));
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		scrollPane.setViewportView(textArea);
 
 		JLabel lblDni = new JLabel("DNI");
@@ -324,7 +322,7 @@ public class MainScreen extends JFrame {
 		panelTareasVarias.add(btnMostrarVehiculo);
 
 		JLabel lblDni_1 = new JLabel("DNI");
-		lblDni_1.setBounds(296, 455, 56, 16);
+		lblDni_1.setBounds(303, 362, 56, 16);
 		panelTareasVarias.add(lblDni_1);
 
 		JButton btnMostrarCliente = new JButton("MOSTRAR");
@@ -342,25 +340,25 @@ public class MainScreen extends JFrame {
 
 			}
 		});
-		btnMostrarCliente.setBounds(488, 434, 104, 42);
+		btnMostrarCliente.setBounds(495, 341, 104, 42);
 		panelTareasVarias.add(btnMostrarCliente);
 
 		JLabel label = new JLabel("DNI");
-		label.setBounds(293, 623, 56, 16);
+		label.setBounds(293, 495, 56, 16);
 		panelTareasVarias.add(label);
 
 		txtDNIReserva = new JTextField();
 		txtDNIReserva.setColumns(10);
-		txtDNIReserva.setBounds(293, 644, 116, 22);
+		txtDNIReserva.setBounds(293, 516, 116, 22);
 		panelTareasVarias.add(txtDNIReserva);
 
 		JLabel lblIdVehculo = new JLabel("Id Vehículo");
-		lblIdVehculo.setBounds(441, 623, 93, 16);
+		lblIdVehculo.setBounds(441, 495, 93, 16);
 		panelTareasVarias.add(lblIdVehculo);
 
 		txtIdVehiculo = new JTextField();
 		txtIdVehiculo.setColumns(10);
-		txtIdVehiculo.setBounds(441, 644, 116, 22);
+		txtIdVehiculo.setBounds(441, 516, 116, 22);
 		panelTareasVarias.add(txtIdVehiculo);
 
 		JButton btnGenerarReserva = new JButton("GENERAR");
@@ -392,50 +390,81 @@ public class MainScreen extends JFrame {
 
 			}
 		});
-		btnGenerarReserva.setBounds(488, 568, 104, 42);
+		btnGenerarReserva.setBounds(488, 440, 104, 42);
 		panelTareasVarias.add(btnGenerarReserva);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(291, 195, 301, 2);
+		separator.setBounds(291, 175, 301, 2);
 		panelTareasVarias.add(separator);
 
 		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(293, 366, 301, 2);
+		separator_2.setBounds(291, 293, 301, 2);
 		panelTareasVarias.add(separator_2);
 
 		JSeparator separator_3 = new JSeparator();
-		separator_3.setBounds(291, 531, 301, 2);
+		separator_3.setBounds(293, 425, 301, 2);
 		panelTareasVarias.add(separator_3);
 
-		JPanel panelEstadisticas = new JPanel();
-		tabbedPane.addTab("Estadísticas", null, panelEstadisticas, null);
-		panelEstadisticas.setLayout(null);
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setBounds(57, 575, 535, 2);
+		panelTareasVarias.add(separator_4);
 
-		JLabel lblNewLabel = new JLabel("Número de vehículos existentes en la base de datos");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel.setBounds(65, 80, 489, 31);
-		panelEstadisticas.add(lblNewLabel);
+		JLabel lblEstadsticas = new JLabel("ESTADÍSTICAS");
+		lblEstadsticas.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEstadsticas.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblEstadsticas.setBounds(43, 592, 209, 42);
+		panelTareasVarias.add(lblEstadsticas);
 
-		JLabel lblMarcaDeVehculos = new JLabel("Marca de vehículos que más kilómetros acumula");
-		lblMarcaDeVehculos.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMarcaDeVehculos.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMarcaDeVehculos.setBounds(65, 148, 489, 31);
-		panelEstadisticas.add(lblMarcaDeVehculos);
+		cbEstadisticas = new JComboBox();
+		cbEstadisticas.setBounds(207, 600, 385, 30);
+		panelTareasVarias.add(cbEstadisticas);
 
-		JLabel lblVehculosConMantenimiento = new JLabel("Vehículos con mantenimiento más caro entre dos años");
-		lblVehculosConMantenimiento.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblVehculosConMantenimiento.setBounds(65, 221, 489, 31);
-		panelEstadisticas.add(lblVehculosConMantenimiento);
+		JButton btnEstadisticas = new JButton("MOSTRAR");
+		btnEstadisticas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-		JLabel lblPrecioMedioDe = new JLabel("Precio medio de mantenimiento por kilómetro recorrido para un vehículo");
-		lblPrecioMedioDe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblPrecioMedioDe.setBounds(65, 286, 851, 31);
-		panelEstadisticas.add(lblPrecioMedioDe);
+				int seleccion = cbEstadisticas.getSelectedIndex();
+				switch (seleccion) {
+				case 0:
+					textArea.append(Estadisticas.nVehiculos() + separador + "\n");
+					break;
+				case 1:
+					textArea.append(Estadisticas.marcaMasKm() + separador + "\n");
+					break;
+				case 2:
+					textArea.append(Estadisticas.vehiculosMantenimientoMasCaro() + separador + "\n");
+					break;
+				case 3:
+					textArea.append(
+							Estadisticas.precioMedioMantenimientoPorKm(Integer.parseInt(txtIdEstaditica.getText()))
+									+ separador + "\n");
+					break;
+				case 4:
+					textArea.append(Estadisticas.vehiculosSinMantenimiento() + separador + "\n");
+					break;
+				case 5:
+					textArea.append(Estadisticas.datosEstadisticosEmpleados() + separador + "\n");
+					break;
+				default:
+					textArea.append("Selecciona una opción \n");
+				}
+			}
+		});
+		btnEstadisticas.setBounds(57, 647, 104, 42);
+		panelTareasVarias.add(btnEstadisticas);
 
-		JLabel lblVehculosQueNo = new JLabel("Vehículos que no han recibido ningún mantenimiento");
-		lblVehculosQueNo.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblVehculosQueNo.setBounds(65, 356, 851, 31);
-		panelEstadisticas.add(lblVehculosQueNo);
+		JLabel label_1 = new JLabel("Id Vehículo");
+		label_1.setBounds(217, 660, 93, 16);
+		panelTareasVarias.add(label_1);
+
+		txtIdEstaditica = new JTextField();
+		txtIdEstaditica.setColumns(10);
+		txtIdEstaditica.setBounds(303, 657, 116, 22);
+		panelTareasVarias.add(txtIdEstaditica);
+
+		JLabel lblsoloParaLa = new JLabel("(Solo para la estadística 4)");
+		lblsoloParaLa.setBounds(237, 688, 236, 16);
+		panelTareasVarias.add(lblsoloParaLa);
 
 		cargarCombos();
 	}
@@ -449,6 +478,13 @@ public class MainScreen extends JFrame {
 			cbTtipoComb.addItem(tipoCombustible.getNombre());
 		for (Categoria c : categorias)
 			cbCategoria.addItem(c.getNombre());
+
+		cbEstadisticas.addItem("1. Número de vehículos existentes en la base de datos");
+		cbEstadisticas.addItem("2. Marca de vehículos que más kilómetros acumula");
+		cbEstadisticas.addItem("3. Vehículos con mantenimiento más caro entre 2010-2020");
+		cbEstadisticas.addItem("4. Precio medio de mantenimiento por km recorrido para un vehículo dado");
+		cbEstadisticas.addItem("5. Vehículos que no han recibido ningún mantenimiento");
+		cbEstadisticas.addItem("6. Estadísticas empleados");
 
 	}
 

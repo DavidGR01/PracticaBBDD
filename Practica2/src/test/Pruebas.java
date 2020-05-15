@@ -3,6 +3,7 @@ package test;
 import db.ConnectionManager;
 import db.DBCliente;
 import db.DBReserva;
+import db.Estadisticas;
 import model.Cliente;
 import model.Vehiculo;
 
@@ -18,14 +19,15 @@ public class Pruebas {
 //		DBTrabajo_Mantenimiento.importarCSV("trabajo_mantenimiento.csv", 50000);
 
 
-		Cliente c = new Cliente(11,5442, "Oscar", "Jadfj", "sdfsdv", "644", 2163);
+//		Cliente c = new Cliente(11,5442, "Oscar", "Jadfj", "sdfsdv", "644", 2163);
+//		
+//		Vehiculo v = new Vehiculo(2, "LQY9436", 2000, 1, 5, 5, 573, 4, 6);
+//		
+//		System.out.println(DBCliente.insertarCliente(c).getIdCliente());
+//		
+//		System.out.println(DBReserva.nuevaReserva(v,c));
 		
-		Vehiculo v = new Vehiculo(2, "LQY9436", 2000, 1, 5, 5, 573, 4, 6);
-		
-		System.out.println(DBCliente.insertarCliente(c).getIdCliente());
-		
-		System.out.println(DBReserva.nuevaReserva(v,c));
-		
+		System.out.println(Estadisticas.datosEstadisticosEmpleados());
 		
 		//
 	}
