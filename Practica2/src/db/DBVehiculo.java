@@ -234,6 +234,7 @@ public class DBVehiculo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
+		
 	}
 }
