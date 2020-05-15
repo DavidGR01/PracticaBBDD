@@ -65,6 +65,11 @@ public class ConnectionManager {
 
 	public static void closeConnection() {
 		try {
+			
+			// comprobar si la clase esta configuarada
+			if (!initialited)
+				throw new ExceptionInInitializerError("You should configure conecction parameters");
+			
 			if (!conn.isClosed())
 				conn.close();
 		} catch (SQLException e) {
