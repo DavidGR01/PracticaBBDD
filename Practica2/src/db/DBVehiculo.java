@@ -234,25 +234,26 @@ public class DBVehiculo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
+
 	public static Vehiculo getVehiculoById(int id) {
-		
+
 		Vehiculo res = null;
-		
+
 		try {
-			PreparedStatement pst = ConnectionManager.getConnection().prepareStatement("SELECT * FROM vehiculo WHERE ID_VEHICULO = ? ;");
-			pst.setInt(1,id);
+			PreparedStatement pst = ConnectionManager.getConnection()
+					.prepareStatement("SELECT * FROM vehiculo WHERE id_vehiculo = ? ;");
+			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
-			if(rs.next())
-				res = new Vehiculo(id,rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getInt(5),rs.getDouble(6),rs.getInt(7),rs.getInt(8),rs.getInt(9));
-		rs.close();
-		pst.close();
+			if (rs.next())
+				res = new Vehiculo(id, rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getDouble(6),
+						rs.getInt(7), rs.getInt(8), rs.getInt(9));
+			rs.close();
+			pst.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			ConnectionManager.closeConnection();
 		}
 		return res;
