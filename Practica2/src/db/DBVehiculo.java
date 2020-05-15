@@ -32,7 +32,7 @@ public class DBVehiculo {
 		try {
 
 			PreparedStatement pst = ConnectionManager.getConnection().prepareStatement("SELECT * FROM vehiculo "
-					+ "WHERE id_tipo_combustible = ? AND id_categoria = ? ORDER BY km, ano_matriculacion desc LIMIT 20 ;");
+					+ "WHERE id_tipo_combustible = ? AND id_categoria = ? ORDER BY km, ano_matriculacion DESC LIMIT 20 ;");
 
 			// Añadimos a la sentencia los parametros pasados
 			pst.setInt(1, combustible.getIdTipoCombustible());

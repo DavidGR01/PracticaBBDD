@@ -36,8 +36,7 @@ public class DBCliente {
 			if (!rs.next() && rs2.next()) {
 				PreparedStatement pstInsertar = conn.prepareStatement(
 						"INSERT INTO cliente(dni_cliente,nombre,apellido1,apellido2,telefono_contacto,id_poblacion) "
-								+ "VALUES(?,?,?,?,?,?);",
-						Statement.RETURN_GENERATED_KEYS);
+								+ "VALUES(?,?,?,?,?,?);",Statement.RETURN_GENERATED_KEYS);
 
 				// Añadimos los atributos del cliente dado
 				pstInsertar.setInt(1, c.getDniCliente());
