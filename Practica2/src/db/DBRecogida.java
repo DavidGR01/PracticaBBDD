@@ -2,9 +2,13 @@ package db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import model.Recogida;
+import model.Vehiculo;
 
 public class DBRecogida {
 
@@ -41,5 +45,24 @@ public class DBRecogida {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public static Recogida getRecogidaById(int id) {
+		Recogida res = null;
+		
+		try {
+			PreparedStatement pst = ConnectionManager.getConnection().prepareStatement("SELECT * FROM recogida WHERE id_reserva = ? ;");
+			pst.setInt(1,id);
+			ResultSet rs = pst.executeQuery();
+			if(rs.next())
+				res = new Recogida(id,rs.getObject(2,LocalDate.class),rs.getObject(3,LocalTime.class),rs.getObject(4,LocalDate.class),(LocalTime)rs.getObject(5,LocalTime.class),rs.getInt(6),rs.getInt(7));
+		rs.close();
+		pst.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			ConnectionManager.closeConnection();
+		}
+		return res;
 	}
 }
