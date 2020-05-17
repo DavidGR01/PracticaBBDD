@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.Categoria;
-import model.Color;
 import model.TipoCombustible;
 import model.Vehiculo;
 
@@ -69,9 +68,14 @@ public class DBVehiculo {
 		}
 
 		return res;
-
 	}
 
+	/**
+	 * Se importa el .csv dado en la tabla vehiculo de la base de datos. Hacemos uso
+	 * de hashmaps para las comprobaciones de FK, agilizando así el proceso
+	 * 
+	 * @param pathFichero ubicacion del .csv a importar
+	 */
 	public static void importarCSV(String pathFichero) {
 
 		// Inciamos el temporizador
@@ -85,7 +89,8 @@ public class DBVehiculo {
 		// Abrir el archivo
 		try {
 
-			// PreparedStatements y ResultSet de matricula
+			// PreparedStatements y ResultSet de matricula. Inicializados aqui para no
+			// hacerlo una vez por cada fila
 			PreparedStatement pstUpdate = conn.prepareStatement(
 					"UPDATE vehiculo SET ano_matriculacion = ?, id_color = ?, num_plazas = ?, km = ?, id_modelo = ?, id_categoria = ?, id_tipo_combustible = ? WHERE matricula = ? ;");
 			PreparedStatement pstInsert = conn
@@ -101,8 +106,6 @@ public class DBVehiculo {
 
 			// Desactivamos FOREIGN_KEY_CHECKS ya que ya lo comprobamos a mano
 			conn.prepareStatement("SET FOREIGN_KEY_CHECKS = 0; ").executeQuery();
-
-			int counter = 0;
 
 			while (sc.hasNext()) {
 				String lineaDatos = sc.nextLine();
@@ -130,7 +133,6 @@ public class DBVehiculo {
 
 				// Comprobar la matricula
 				pstMatricula.setString(1, cols[0]);
-
 				rs = pstMatricula.executeQuery();
 
 				if (rs.next() && FKCorrectas) {
@@ -160,8 +162,6 @@ public class DBVehiculo {
 					pstInsert.addBatch();
 					pstInsert.executeBatch();
 				}
-
-				System.out.println(counter++);
 
 				// Hacemos commit
 				conn.commit();
@@ -226,6 +226,7 @@ public class DBVehiculo {
 			while (rs3.next())
 				categorias.put(rs3.getString(2), rs3.getInt(1));
 
+			// Cerramos los recursos
 			st.close();
 			rs.close();
 			rs1.close();
@@ -234,7 +235,6 @@ public class DBVehiculo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static Vehiculo getVehiculoById(int id) {
@@ -249,6 +249,8 @@ public class DBVehiculo {
 			if (rs.next())
 				res = new Vehiculo(id, rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getDouble(6),
 						rs.getInt(7), rs.getInt(8), rs.getInt(9));
+
+			// Cerramos los recursos
 			rs.close();
 			pst.close();
 		} catch (SQLException e) {

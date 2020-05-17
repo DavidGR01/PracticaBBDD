@@ -30,8 +30,6 @@ public class ConnectionManager {
 		// comprobar si la clase esta configuarada
 		if (!initialited)
 			throw new ExceptionInInitializerError("You should configure conecction parameters");
-		// comprobar si la conexion esta libre
-		// en este ejemplo no va a pasar pq no hay mas de un proceso
 
 		// comprobar si la conexion esta iniciada
 		try {
@@ -65,11 +63,11 @@ public class ConnectionManager {
 
 	public static void closeConnection() {
 		try {
-			
+
 			// comprobar si la clase esta configuarada
 			if (!initialited)
 				throw new ExceptionInInitializerError("You should configure conecction parameters");
-			
+
 			if (!conn.isClosed())
 				conn.close();
 		} catch (SQLException e) {

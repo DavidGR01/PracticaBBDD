@@ -46,21 +46,29 @@ public class DBRecogida {
 			e.printStackTrace();
 		}
 	}
+
 	public static Recogida getRecogidaById(int id) {
 		Recogida res = null;
-		
+
 		try {
-			PreparedStatement pst = ConnectionManager.getConnection().prepareStatement("SELECT * FROM recogida WHERE id_reserva = ? ;");
-			pst.setInt(1,id);
+			PreparedStatement pst = ConnectionManager.getConnection()
+					.prepareStatement("SELECT * FROM recogida WHERE id_reserva = ? ;");
+
+			pst.setInt(1, id);
+
 			ResultSet rs = pst.executeQuery();
-			if(rs.next())
-				res = new Recogida(id,rs.getObject(2,LocalDate.class),rs.getObject(3,LocalTime.class),rs.getObject(4,LocalDate.class),(LocalTime)rs.getObject(5,LocalTime.class),rs.getInt(6),rs.getInt(7));
-		rs.close();
-		pst.close();
+
+			if (rs.next())
+				res = new Recogida(id, rs.getObject(2, LocalDate.class), rs.getObject(3, LocalTime.class),
+						rs.getObject(4, LocalDate.class), (LocalTime) rs.getObject(5, LocalTime.class), rs.getInt(6),
+						rs.getInt(7));
+
+			// Cerramos los recursos
+			rs.close();
+			pst.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			ConnectionManager.closeConnection();
 		}
 		return res;

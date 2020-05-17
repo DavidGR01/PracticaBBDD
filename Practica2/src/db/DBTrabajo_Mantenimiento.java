@@ -41,7 +41,6 @@ public class DBTrabajo_Mantenimiento {
 
 			// Inicializamos el contador de los lotes
 			int contador = 0;
-			int contadorLotes = 0;
 
 			// Iniciamos la transacción
 			conn.setAutoCommit(false);
@@ -50,13 +49,17 @@ public class DBTrabajo_Mantenimiento {
 				String lineaDatos = sc.nextLine();
 				String[] cols = lineaDatos.split(";(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
 
+				// Quitamos las comillas sobrantes
+				for (int i = 0; i < cols.length; i++)
+					cols[i] = cols[i].replace("\"", "");
+
 				// Coger valores de los HashMaps y del csv
-				String matricula = cols[0].replace("\"", "");
-				Integer idTipoMantenimiento = Integer.parseInt(cols[1].replace("\"", ""));
-				Integer idEmpleado = Integer.parseInt(cols[2].replace("\"", ""));
-				LocalDateTime fecha = LocalDateTime.parse(cols[3].replace("\"", "").replace(" ", "T"));
-				Double numHoras = Double.parseDouble(cols[4].replace("\"", ""));
-				Double kmVehiculo = Double.parseDouble(cols[5].replace("\"", ""));
+				String matricula = cols[0];
+				Integer idTipoMantenimiento = Integer.parseInt(cols[1]);
+				Integer idEmpleado = Integer.parseInt(cols[2]);
+				LocalDateTime fecha = LocalDateTime.parse(cols[3].replace(" ", "T"));
+				Double numHoras = Double.parseDouble(cols[4]);
+				Double kmVehiculo = Double.parseDouble(cols[5]);
 
 				// Variables de comprobacion
 				Integer idVehiculo = matriculas.get(matricula);
@@ -80,7 +83,6 @@ public class DBTrabajo_Mantenimiento {
 
 				// Si el lote está lleno ejecutamos el batch
 				if (contador == tamanoLote) {
-					contadorLotes++;
 					pst.executeBatch();
 					conn.commit();
 					contador = 0;
@@ -92,7 +94,6 @@ public class DBTrabajo_Mantenimiento {
 			}
 
 			if (contador != 0) {
-				System.out.println("Acabado");
 
 				// Ejecutamos el ultimo batch
 				pst.executeBatch();
@@ -149,6 +150,7 @@ public class DBTrabajo_Mantenimiento {
 			while (rs2.next())
 				matriculas.put(rs2.getString(2), rs2.getInt(1));
 
+			// Cerramos los recursos
 			st.close();
 			rs.close();
 			rs1.close();

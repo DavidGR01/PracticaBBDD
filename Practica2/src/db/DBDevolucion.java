@@ -54,10 +54,14 @@ public class DBDevolucion {
 			PreparedStatement pst = ConnectionManager.getConnection()
 					.prepareStatement("SELECT * FROM devolucion WHERE id_reserva = ? ;");
 			pst.setInt(1, idReserva);
+
 			ResultSet rs = pst.executeQuery();
+
 			if (rs.next())
 				res = new Devolucion(rs.getInt(1), rs.getObject(2, LocalDate.class), rs.getObject(3, LocalTime.class),
 						rs.getObject(4, LocalDate.class), rs.getObject(5, LocalTime.class), rs.getInt(6), rs.getInt(7));
+
+			// Cerramos los recursos
 			rs.close();
 			pst.close();
 		} catch (SQLException e) {

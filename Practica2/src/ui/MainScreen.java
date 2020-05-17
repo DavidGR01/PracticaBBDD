@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -43,31 +42,27 @@ import model.Reserva;
 import model.TipoCombustible;
 import model.Vehiculo;
 
+@SuppressWarnings("serial")
 public class MainScreen extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtDNI;
-	private JTextField dniNuevoCliente;
+	private JTextField txtDNI, dniNuevoCliente, nombreNuevoCliente, apellido1NuevoCliente, apellido2NuevoCliente,
+			telefonoNuevoCliente, idPoblacionNuevoCliente, txtDNIReserva, txtIdVehiculo, txtIdEstaditica;
 	private JTextArea textArea;
-	private JTextField nombreNuevoCliente;
-	private JTextField apellido1NuevoCliente;
-	private JTextField apellido2NuevoCliente;
-	private JTextField telefonoNuevoCliente;
-	private JTextField idPoblacionNuevoCliente;
-	private JComboBox cbCategoria, cbTtipoComb, cbEstadisticas;
+	private JComboBox<String> cbCategoria, cbTtipoComb, cbEstadisticas;
 	private List<Categoria> categorias;
 	private List<TipoCombustible> combustibles;
-	private JTextField txtDNIReserva;
-	private JTextField txtIdVehiculo;
 	private String separador = "------------------------------------------";
-	private JTextField txtIdEstaditica;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 
+		// ----------------------------------------------------------------------------------------
+		// Establecemos la conexion
 		ConnectionManager.init("localhost", "3306", "practica_bbdd_2020", "root", "hola123");
+		// ----------------------------------------------------------------------------------------
 
 		/**
 		 * Set L&F
@@ -143,9 +138,11 @@ public class MainScreen extends JFrame {
 		btnColores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+				// ----------------------------------------------------------------------------------------
+				// Llamamos al metodo creado anteriormente y lo imprimimos por pantalla
 				List<Color> colores = DBColor.listadoColores();
 				printList(colores);
-
+				// ----------------------------------------------------------------------------------------
 			}
 		});
 		btnColores.setBounds(303, 237, 75, 25);
@@ -155,8 +152,10 @@ public class MainScreen extends JFrame {
 		btnCombustibles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				// ----------------------------------------------------------------------------------------
 				List<TipoCombustible> combustibles = DBTipoCombustible.listadoTiposCombustible();
 				printList(combustibles);
+				// ----------------------------------------------------------------------------------------
 
 			}
 		});
@@ -167,8 +166,10 @@ public class MainScreen extends JFrame {
 		btnCategorias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+				// ----------------------------------------------------------------------------------------
 				List<Categoria> categorias = DBCategoria.listadoCategorias();
 				printList(categorias);
+				// ----------------------------------------------------------------------------------------
 
 			}
 		});
@@ -195,6 +196,7 @@ public class MainScreen extends JFrame {
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				// ----------------------------------------------------------------------------------------
 				// Cargamos los atributos de los textarea
 				int dni = Integer.parseInt(dniNuevoCliente.getText());
 				String nombre = nombreNuevoCliente.getText();
@@ -215,6 +217,7 @@ public class MainScreen extends JFrame {
 				} else {
 					textArea.append("Fallo de insercion: comprueba que el id de la población existe \n");
 				}
+				// ----------------------------------------------------------------------------------------
 
 			}
 		});
@@ -280,7 +283,7 @@ public class MainScreen extends JFrame {
 		idPoblacionNuevoCliente.setBounds(57, 416, 144, 22);
 		panelTareasVarias.add(idPoblacionNuevoCliente);
 
-		cbTtipoComb = new JComboBox();
+		cbTtipoComb = new JComboBox<String>();
 		cbTtipoComb.setToolTipText("Combustible");
 		cbTtipoComb.setBounds(307, 127, 110, 25);
 		panelTareasVarias.add(cbTtipoComb);
@@ -294,7 +297,7 @@ public class MainScreen extends JFrame {
 		lblCategora.setBounds(453, 103, 91, 16);
 		panelTareasVarias.add(lblCategora);
 
-		cbCategoria = new JComboBox();
+		cbCategoria = new JComboBox<String>();
 		cbCategoria.setToolTipText("Combustible");
 		cbCategoria.setBounds(453, 127, 110, 25);
 		panelTareasVarias.add(cbCategoria);
@@ -303,19 +306,19 @@ public class MainScreen extends JFrame {
 		btnMostrarVehiculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+				// ----------------------------------------------------------------------------------------
 				// Buscamos el tipo de combustible
-
 				TipoCombustible tc = combustibles.get(cbTtipoComb.getSelectedIndex());
 
 				// Buscamos la categoria
-
 				Categoria c = categorias.get(cbCategoria.getSelectedIndex());
 
 				// Hacemos la peticion a la BD
-
 				List<Vehiculo> vs = DBVehiculo.getVehiculos(tc, c);
 
 				printList(vs);
+				// ----------------------------------------------------------------------------------------
+
 			}
 		});
 		btnMostrarVehiculo.setBounds(495, 43, 104, 42);
@@ -329,6 +332,7 @@ public class MainScreen extends JFrame {
 		btnMostrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				// ----------------------------------------------------------------------------------------
 				// Cogemos el DNI del area de texto
 				int dni = Integer.parseInt(txtDNI.getText());
 
@@ -337,6 +341,7 @@ public class MainScreen extends JFrame {
 
 				// Mostramos en la "consola", saltamos la linea y ponemos un separador
 				textArea.append(c + "\n" + separador + "\n");
+				// ----------------------------------------------------------------------------------------
 
 			}
 		});
@@ -365,6 +370,7 @@ public class MainScreen extends JFrame {
 		btnGenerarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				// ----------------------------------------------------------------------------------------
 				// Obtener dni del textarea
 				int dni = Integer.parseInt(txtDNIReserva.getText());
 
@@ -384,9 +390,9 @@ public class MainScreen extends JFrame {
 
 				// Los añadimos a la "consola"
 				textArea.append("Creada la reserva: " + r + "\n");
-
 				textArea.append("Se crea también una recogida: " + re + "\n");
 				textArea.append("Y una devolución: " + d + "\n" + separador + "\n");
+				// ----------------------------------------------------------------------------------------
 
 			}
 		});
@@ -415,7 +421,7 @@ public class MainScreen extends JFrame {
 		lblEstadsticas.setBounds(43, 592, 209, 42);
 		panelTareasVarias.add(lblEstadsticas);
 
-		cbEstadisticas = new JComboBox();
+		cbEstadisticas = new JComboBox<String>();
 		cbEstadisticas.setBounds(207, 600, 385, 30);
 		panelTareasVarias.add(cbEstadisticas);
 
@@ -423,31 +429,46 @@ public class MainScreen extends JFrame {
 		btnEstadisticas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				// ----------------------------------------------------------------------------------------
 				int seleccion = cbEstadisticas.getSelectedIndex();
 				switch (seleccion) {
 				case 0:
+					textArea.append("1. Número de vehículos existentes en la base de datos \n");
 					textArea.append(Estadisticas.nVehiculos() + separador + "\n");
 					break;
 				case 1:
+					textArea.append("2. Marca de vehículos que más kilómetros acumula \n");
 					textArea.append(Estadisticas.marcaMasKm() + separador + "\n");
 					break;
 				case 2:
+					textArea.append("3. Vehículos con mantenimiento más caro entre 2010-2020 \n");
 					textArea.append(Estadisticas.vehiculosMantenimientoMasCaro() + separador + "\n");
 					break;
 				case 3:
-					textArea.append(
-							Estadisticas.precioMedioMantenimientoPorKm(Integer.parseInt(txtIdEstaditica.getText()))
-									+ separador + "\n");
+					String idVehiculo = txtIdEstaditica.getText();
+					if (!idVehiculo.equals("")) {
+						textArea.append("4. Precio medio de mantenimiento por km recorrido para un vehículo dado \n");
+						textArea.append(Estadisticas.precioMedioMantenimientoPorKm(Integer.parseInt(idVehiculo))
+								+ separador + "\n");
+					} else {
+						textArea.append("4. Precio medio de mantenimiento por km recorrido para un vehículo dado \n");
+						textArea.append("Introduce un id Vehículo" + "\n" + separador + "\n");
+					}
 					break;
 				case 4:
+					textArea.append("5. Vehículos que no han recibido ningún mantenimiento \n");
 					textArea.append(Estadisticas.vehiculosSinMantenimiento() + separador + "\n");
 					break;
 				case 5:
+					textArea.append("6. Estadísticas empleados \n");
 					textArea.append(Estadisticas.datosEstadisticosEmpleados() + separador + "\n");
 					break;
 				default:
 					textArea.append("Selecciona una opción \n");
+					break;
 				}
+				// ----------------------------------------------------------------------------------------
+
 			}
 		});
 		btnEstadisticas.setBounds(57, 647, 104, 42);
@@ -471,6 +492,7 @@ public class MainScreen extends JFrame {
 
 	private void cargarCombos() {
 
+		// ----------------------------------------------------------------------------------------
 		combustibles = DBTipoCombustible.listadoTiposCombustible();
 		categorias = DBCategoria.listadoCategorias();
 
@@ -485,6 +507,7 @@ public class MainScreen extends JFrame {
 		cbEstadisticas.addItem("4. Precio medio de mantenimiento por km recorrido para un vehículo dado");
 		cbEstadisticas.addItem("5. Vehículos que no han recibido ningún mantenimiento");
 		cbEstadisticas.addItem("6. Estadísticas empleados");
+		// ----------------------------------------------------------------------------------------
 
 	}
 

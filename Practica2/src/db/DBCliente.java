@@ -22,21 +22,22 @@ public class DBCliente {
 			Connection conn = ConnectionManager.getConnection();
 
 			// Sentencia para comprobar si existe ya el cliente
-			PreparedStatement pst = conn.prepareStatement("SELECT * FROM cliente WHERE dni_cliente = ? ;");
-			pst.setInt(1, c.getDniCliente());
+			PreparedStatement pstExiste = conn.prepareStatement("SELECT * FROM cliente WHERE dni_cliente = ? ;");
+			pstExiste.setInt(1, c.getDniCliente());
 
 			// Sentencia para verificar la FK id_poblacion
-			PreparedStatement pst2 = conn.prepareStatement("SELECT * FROM poblacion WHERE id_poblacion = ? ;");
-			pst2.setInt(1, c.getIdPoblacion());
+			PreparedStatement pstFK = conn.prepareStatement("SELECT * FROM poblacion WHERE id_poblacion = ? ;");
+			pstFK.setInt(1, c.getIdPoblacion());
 
-			ResultSet rs = pst.executeQuery();
-			ResultSet rs2 = pst2.executeQuery();
+			ResultSet rsExiste = pstExiste.executeQuery();
+			ResultSet rsFK = pstFK.executeQuery();
 
 			// Si no existe e id_poblacion es correcta lo añadimos, si existe devolvemos -1
-			if (!rs.next() && rs2.next()) {
+			if (!rsExiste.next() && rsFK.next()) {
 				PreparedStatement pstInsertar = conn.prepareStatement(
 						"INSERT INTO cliente(dni_cliente,nombre,apellido1,apellido2,telefono_contacto,id_poblacion) "
-								+ "VALUES(?,?,?,?,?,?);",Statement.RETURN_GENERATED_KEYS);
+								+ "VALUES(?,?,?,?,?,?);",
+						Statement.RETURN_GENERATED_KEYS);
 
 				// Añadimos los atributos del cliente dado
 				pstInsertar.setInt(1, c.getDniCliente());
@@ -62,10 +63,10 @@ public class DBCliente {
 			}
 
 			// Cerramos los recursos
-			pst.close();
-			pst2.close();
-			rs.close();
-			rs2.close();
+			pstExiste.close();
+			pstFK.close();
+			rsExiste.close();
+			rsFK.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -112,7 +113,6 @@ public class DBCliente {
 		}
 
 		return res;
-
 	}
 
 }
